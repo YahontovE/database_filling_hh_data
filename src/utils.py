@@ -77,11 +77,13 @@ def bild_salary(salary):
     return None
 
 def currency_filter(salary):
+    '''Фильтрация получаймых значений валюты'''
     if salary is not None:
         if salary['currency'] is not None:
             return salary['currency']
     return None
 def field_of_activity_filter(industries):
+    '''Фильтрация корректного получения данных о сфере деятельности компании'''
     if len(industries) != 0:
         if len(industries) == 2 :
             return industries[1]['name']
@@ -125,6 +127,3 @@ def filling_database_hh_data(database_data, database_name, params):
 
     conn.commit()
     conn.close()
-
-# companies=[78638,8884]
-# print(get_employers(companies))
