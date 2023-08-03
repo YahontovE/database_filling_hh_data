@@ -5,7 +5,7 @@ from src.utils import get_employers, create_database, filling_database_hh_data,c
 def main():
     companies_id = [78638,  # Тинькофф
                     8884,  # dr.Web
-                    #2324020,  # Финтех
+                    2324020,  # Финтех
                     #5179890,  # Enjoypro
                     #67611,  # tensor
                     #1795976,  # ITMO
