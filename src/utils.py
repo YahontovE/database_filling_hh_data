@@ -23,7 +23,7 @@ def get_employers(companies_id):
 
 
 def create_database(database_name, params):
-    '''Создаем базу данных и таблиц'''
+    '''Создаем базу данных'''
     conn = psycopg2.connect(dbname='postgres', **params)
     conn.autocommit = True
     cur = conn.cursor()
