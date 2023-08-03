@@ -6,13 +6,13 @@ def main():
     companies_id = [78638,  # Тинькофф
                     8884,  # dr.Web
                     2324020,  # Финтех
-                    #5179890,  # Enjoypro
-                    #67611,  # tensor
-                    #1795976,  # ITMO
-                    #3202190,  # KTS
-                    #1993194,  # Yadro
-                    #3292313,  # Holyweb
-                    #4649269,  # Иннотех
+                    5179890,  # Enjoypro
+                    67611,  # tensor
+                    1795976,  # ITMO
+                    3202190,  # KTS
+                    1993194,  # Yadro
+                    3292313,  # Holyweb
+                    4649269,  # Иннотех
                     ]
     params = config()
 
