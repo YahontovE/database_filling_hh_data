@@ -60,6 +60,8 @@ def create_table_in_bd(database_name, params):
                     employer_id INT REFERENCES employer (employer_id) NOT NULL,
                     title_vacancy VARCHAR(255) NOT NULL,
                     publish_date DATE,
+                    salary_from INT,
+                    currency VARCHAR(100),
                     vacancy_url TEXT
                 )
             """)
@@ -67,6 +69,25 @@ def create_table_in_bd(database_name, params):
     conn.commit()
     conn.close()
 
+def bild_salary(salary):
+    '''Создаем условие проверки на наличие данных в графе зарплата и условия вывода'''
+    if salary is not None:
+        if salary['from'] is not None:
+            return salary['from']
+    return None
+
+def currency_filter(salary):
+    if salary is not None:
+        if salary['currency'] is not None:
+            return salary['currency']
+    return None
+def field_of_activity_filter(industries):
+    if len(industries) != 0:
+        if len(industries) == 2 :
+            return industries[1]['name']
+        elif len(industries) == 1:
+            return industries[0]['name']
+    return None
 
 def filling_database_hh_data(database_data, database_name, params):
     '''Заполение таблиц данными полученымы с hh.ru'''
@@ -74,25 +95,32 @@ def filling_database_hh_data(database_data, database_name, params):
     with conn.cursor() as cur:
         for company in database_data:
             company_data = company['company']
+            field_of_activity = field_of_activity_filter(company_data['industries'])
             cur.execute(
                 """
                 INSERT INTO employer (title_employer,city,field_of_activity,site_url)
                 VALUES (%s, %s, %s, %s)
                 RETURNING employer_id
                 """,
-                (company_data['name'], company_data['area']['name'], company_data['industries'][1]['name'],
+                (company_data['name'], company_data['area']['name'], field_of_activity,
                  company_data['site_url'])
             )
             employer_id = cur.fetchone()[0]
             vacancies_data = company['vacancies']
             for inf in vacancies_data:
-                # vacancy_data=inf['vacancies']
+                salary = bild_salary(inf["salary"])
+                currency=currency_filter(inf["salary"])
                 cur.execute(
                     """
-                    INSERT INTO vacancies (employer_id, title_vacancy, publish_date,vacancy_url)
-                    VALUES (%s, %s, %s, %s)
+                    INSERT INTO vacancies (employer_id, title_vacancy, publish_date,salary_from,currency,vacancy_url)
+                    VALUES (%s, %s, %s, %s, %s, %s)
                     """,
-                    (employer_id, inf['name'], inf['published_at'][:10], inf['alternate_url'])
+                    (employer_id,
+                     inf['name'],
+                     inf['published_at'][:10],
+                     salary,
+                     currency,
+                     inf['alternate_url'])
                 )
 
     conn.commit()
