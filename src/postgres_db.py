@@ -54,7 +54,3 @@ class DBManager:
             rows = cur.fetchall()
         self.conn.close()
         return rows
-
-
-q=DBManager()
-print(q.get_all_vacancies())
