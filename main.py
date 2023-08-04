@@ -7,7 +7,7 @@ def main():
                     8884,  # dr.Web
                     2324020,  # Финтех
                     5179890,  # Enjoypro
-                    67611,  # tensor
+                    67611,  # Tensor
                     1795976,  # ITMO
                     3202190,  # KTS
                     1993194,  # Yadro
